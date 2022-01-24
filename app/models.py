@@ -15,6 +15,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(256), nullable=False)
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     is_admin = db.Column(db.Boolean, default=False)
+    posts = db.relationship('Post', backref='User')
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -32,7 +33,8 @@ class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title=db.Column(db.String(50),nullable=False)
     body=db.Column(db.String(200),nullable=False)
-    
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
   
 
