@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %} Register {% endblock %}
+
+{% block content %}
+    <h1>Add Blog Post</h1>
+    
+    <form action="" method='post'>
+        {{ form.csrf_token }}
+        <div class="form-group">
+            <fieldset>
+                {{ form.title.label }}
+                {{ form.title(class='form-control', placeholder='Title') }}
+            </fieldset>
+            <fieldset>
+                {{ form.body.label }}
+                {{ form.body(class='form-control', rows='8', placeholder='Body') }}
+            </fieldset>
+        </div>
+        {{ form.submit(class='btn btn-outline-success') }}
+    </form>
+{% endblock %}

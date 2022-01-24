@@ -1,8 +1,8 @@
 from app import app
 from flask import render_template, redirect, url_for, flash
 from flask_login import login_user, logout_user, login_required, current_user
-from app.forms import RegisterForm, LoginForm,PostForm
-from app.models import User,Post
+from app.forms import RegisterForm, LoginForm, PostForm
+from app.models import User, Post
 
 
 @app.route ('/')
@@ -11,13 +11,13 @@ def index():
     return render_template('index.html',posts=posts)
 
 
-@app.route('/register',methods=["GET","POST"])
+@app.route('/register', methods=["GET","POST"])
 def register():
     form=RegisterForm()
     if form.validate_on_submit():
         
         username=form.username.data
-        email=form.username.data
+        email=form.email.data
         password=form.password.data
 
         user_exists = User.query.filter((User.username == username)|(User.email == email)).all()
@@ -30,13 +30,12 @@ def register():
 
         User(username=username, email=email, password=password)
         flash("Thank you for registering!", "primary")
-        return redirect (url_for('index.html'))
+        return redirect(url_for('index'))
     return render_template('register.html',form=form)
   
 @app.route('/login', methods=["GET", "POST"])
 def login():
     form = LoginForm()
-   
     if form.validate_on_submit():
         
         username = form.username.data
@@ -61,30 +60,22 @@ def login():
 @app.route('/logout')
 def logout():
     logout_user()
+    flash("You have logged out", "secondary")
     return redirect(url_for('index'))
 
-@app.route('/posts/<int:post_id>')
-def post_info(post_id):
-    post = Post.query.get_or_404(post_id)
-    return render_template('posts.html', post = post)
-
-@app.route('/posts/<int:post_id>', methods=["GET", "POST"])
-@login_required
-def edit_post(post_id):
-    if not current_user.is_admin:
-        flash("Sorry! You can't edit this one!!", "warning")
-        return redirect(url_for('index'))
-    post = Post.query.get_or_404(post_id)
+@app.route('/add-post', methods=['GET','POST'])
+def add_post():
     form = PostForm()
     if form.validate_on_submit():
-        title = form.title.data
+        #get blog info and turn it into an empty field
+        title = form.title.data 
         body = form.body.data
-        post.title = title
-        post.body = body
-        post.save()
-        flash(f"{post.title} has been updated", "primary")
-        return redirect(url_for('posts.html', post_id=post.id))
+        #Create a Post model and adds to db through its super init. 
+        Post(title = title, body = body)
+        #flash message if blog posted
+        flash('Blog posted!')
 
-    return render_template('posts.html', post = post, form=form)
+    return render_template('add_post.html', form=form)
+
 
 

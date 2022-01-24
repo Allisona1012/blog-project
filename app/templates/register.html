@@ -1,28 +1,30 @@
 {% extends 'base.html' %}
-{% block content %}
-  
-  <form action ="" method='post'>
-    {{ form.csrf_token }}
-    <h1 class="h3 mb-3 fw-normal">Please Register</h1>
-      <div class="form-floating pb-3">
-        <input type="username" class="form-control" id="floatingInput" placeholder="Username">
-        <label for="floatingInput">Username</label>
-      </div>
-    <div class="form-floating pb-3">
-      <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-      <label for="floatingInput">Email address</label>
-    </div>
-    <div class="form-floating pb-3">
-      <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-      <label for="floatingPassword">Password</label>
 
-    </div>
-    <div class="form-floating pb-3">
-        <input type="password" class="form-control" id="floatingPassword" placeholder="Confirm Password">
-        <label for="floatingPassword">Confirm Password</label>
-  
-      </div>
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Register</button>
-   
-  </form>
+{% block title %} Register {% endblock %}
+
+{% block content %}
+    <h1>Register Here</h1>
+    
+    <form action="" method='post'>
+        {{ form.csrf_token }}
+        <div class="form-group">
+            <fieldset>
+                {{ form.username.label }}
+                {{ form.username(class='form-control', placeholder='Username') }}
+            </fieldset>
+            <fieldset>
+                {{ form.email.label }}
+                {{ form.email(class='form-control', placeholder='Email') }}
+            </fieldset>
+            <fieldset>
+                {{ form.password.label }}
+                {{ form.password(class='form-control', placeholder='Password') }}
+            </fieldset>
+            <fieldset>
+                {{ form.confirm_pass.label }}
+                {{ form.confirm_pass(class='form-control', placeholder='Confirm Password') }}
+            </fieldset>
+        </div>
+        {{ form.submit(class='btn btn-outline-success') }}
+    </form>
 {% endblock %}

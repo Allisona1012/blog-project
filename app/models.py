@@ -33,18 +33,13 @@ class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title=db.Column(db.String(50),nullable=False)
     body=db.Column(db.String(200),nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+
   
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        db.session.add(self)
+        db.session.commit()
 
     def __repr__(self):
         return f"<Post|{self.title}>"
-
-    def save(self):
-        db.session.commit()
-
-    def delete(self):
-        db.session.delete(self)
-        db.session.commit()
-  

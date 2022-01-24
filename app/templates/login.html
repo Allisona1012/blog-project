@@ -1,37 +1,21 @@
 {% extends 'base.html' %}
 
+
 {% block content %}
-    
+<h1>Login</h1>
 
-
-    
-<main class="form-signin">
-  <form action="" method="post">
+<form action="" method="post">
     {{ form.csrf_token }}
-    <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
-
-    <div class="form-floating pb-5">
-      <input type="username" class="form-control" id="floatingInput" placeholder="username">
-      <label for="floatingInput">Username</label>
+    <div class="form-group">
+        <fieldset>
+            {{ form.username.label }}
+            {{ form.username(class='form-control', placeholder='Username') }}
+        </fieldset>
+        <fieldset>
+            {{ form.password.label }}
+            {{ form.password(class='form-control', placeholder='Password') }}
+        </fieldset>
     </div>
-    <div class="form-floating pb-5">
-        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-        <label for="floatingInput">Email address</label>
-      </div>
-    <div class="form-floating pb-5">
-      <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-      <label for="floatingPassword">Password</label>
-    </div>
-
-    <div class="checkbox mb-3">
-      <label>
-        <input type="checkbox" value="remember-me"> Remember me
-      </label>
-    </div>
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
-  </form>
-
-</main>
+    {{ form.submit(class='btn btn-outline-success') }}
+</form>
 {% endblock %}
-
-
